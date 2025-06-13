@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h1> Аниме Товары</h1>
+
 <div class="product-list">
-{% for product in products %}
-  <div class="product-card">
-    <a href="{% url 'product_detail' product.pk %}">
-      <img src="{{ product.image.url }}" width="200">
-      <h3>{{ product.title }}</h3>
-      <p>${{ product.price }}</p>
-    </a>
-  </div>
-{% endfor %}
+  {% for product in products %}
+    <div class="product-card">
+      <a href="{% url 'product_detail' product.pk %}">
+        <img src="{{ product.image.url }}" alt="{{ product.title }}" width="200">
+        <h3>{{ product.title }}</h3>
+        <p>${{ product.price }}</p>
+      </a>
+    </div>
+  {% endfor %}
 </div>
+
 {% endblock %}
