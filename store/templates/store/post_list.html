@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Посты пользователей</h1>
+{% for post in posts %}
+  <div class="product-card">
+    <a href="{% url 'post_detail' post.pk %}">
+      <h3>{{ post.title }}</h3>
+    </a>
+    <p>Автор: {{ post.author }}</p>
+    <p>{{ post.created_at }}</p>
+  </div>
+{% endfor %}
+<a href="{% url 'post_create' %}"><button>Создать пост</button></a>
+{% endblock %}
