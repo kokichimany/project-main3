@@ -1,29 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ product.title }}</h1>
-<img src="{{ product.image.url }}" width="300">
-<p>{{ product.description }}</p>
-<p>Цена: ${{ product.price }}</p>
+  <div class="product-detail">
+    <h2>{{ product.title }}</h2>
+    {% if product.image %}
+      <img src="{{ product.image.url }}" width="300">
+    {% else %}
+      <img src="/static/default.jpg" width="300">
+    {% endif %}
+    <p><strong>Описание:</strong> {{ product.description }}</p>
+    <p><strong>Цена:</strong> {{ product.price }} сом</p>
 
-<h2>Комментарии:</h2>
-<ul>
-  {% for comment in comments %}
-    <li><strong>{{ comment.user }}:</strong> {{ comment.text }} <br><small>{{ comment.created_at }}</small></li>
-  {% empty %}
-    <li>Пока нет комментариев.</li>
-  {% endfor %}
-</ul>
+    <hr>
+    <h3>Комментарии:</h3>
+    {% for comment in comments %}
+      <div class="comment">
+        <strong>{{ comment.user.username }}</strong>: {{ comment.text }} <em>({{ comment.created_at }})</em>
+      </div>
+    {% empty %}
+      <p>Комментариев пока нет.</p>
+    {% endfor %}
 
-{% if user.is_authenticated %}
-  <h3>Добавить комментарий</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Отправить</button>
-  </form>
-{% else %}
-  <p><a href="/accounts/login/">Войдите</a>, чтобы оставить комментарий.</p>
-{% endif %}
-
-<a href="/">Назад</a>
+    {% if user.is_authenticated %}
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Оставить комментарий</button>
+      </form>
+    {% else %}
+      <p><a href="/accounts/login/">Войдите</a>, чтобы оставить комментарий.</p>
+    {% endif %}
+  </div>
 {% endblock %}
